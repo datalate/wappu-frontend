@@ -1,0 +1,67 @@
+.program-info {
+  margin: 5px 0;
+  padding: 1px 0;
+
+  &:hover {
+    background-color: #440d12;
+    cursor: pointer;
+  }
+
+  &.hidden {
+    border-color: #2d030e;
+    border-width: 0 3px 3px 0;
+    border-style: solid;
+  }
+
+  h5 {
+    font-family: "Lucida Console", Monaco, monospace;
+    color: #ddd;
+    margin-top: -10px;
+    font-weight: normal;
+  }
+}
+
+.program-tracks {
+  width: 100%;
+  border-spacing: 0;
+  table-layout: fixed;
+  white-space: nowrap;
+
+  &.hidden {
+    display: none;
+  }
+
+  tr, th {
+    padding: 8px;
+  }
+
+  tr:nth-child(even) {
+    background-color: #33030e;
+  }
+
+  tr:nth-child(odd) {
+    background-color: #440d12;
+  }
+
+  td {
+    font-family: "Lucida Console", Monaco, monospace;
+    font-size: 1.05em;
+    padding: 3px 10px;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
+
+  .time {
+    width: 60px;
+  }
+}
+
+.time {
+	text-align: right;
+}
+
+.artist,
+.title {
+	text-align: left;
+}

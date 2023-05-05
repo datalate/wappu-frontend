@@ -1,0 +1,24 @@
+.title {
+  text-transform: uppercase;
+  font-size: 2.5em;
+}
+
+.playlist {
+  max-width: 1600px;
+  margin: 0 auto 25px;
+  padding: 0 10px;
+}
+
+.playlist-nav {
+  float: right;
+
+  a {
+    font-family: "Lucida Console", Monaco, monospace;
+    text-transform: uppercase;
+    margin: 0 1px;
+  }
+
+  a:hover {
+    color: lightgray;
+  }
+}
