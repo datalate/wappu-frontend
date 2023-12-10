@@ -87,10 +87,10 @@
           "builder": "@angular-devkit/build-angular:dev-server",
           "configurations": {
             "production": {
-              "browserTarget": "wappu-frontend:build:production"
+              "buildTarget": "wappu-frontend:build:production"
             },
             "development": {
-              "browserTarget": "wappu-frontend:build:development"
+              "buildTarget": "wappu-frontend:build:development"
             }
           },
           "defaultConfiguration": "development"
@@ -98,7 +98,7 @@
         "extract-i18n": {
           "builder": "@angular-devkit/build-angular:extract-i18n",
           "options": {
-            "browserTarget": "wappu-frontend:build"
+            "buildTarget": "wappu-frontend:build"
           }
         },
         "test": {
