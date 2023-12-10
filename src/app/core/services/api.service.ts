@@ -2,11 +2,7 @@ import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Observable, throwError } from 'rxjs';
 import { catchError } from 'rxjs/operators';
-
-// TODO
-const environment = {
-  apiBaseUrl: 'http://localhost:3000/api/v1'
-}
+import { environment } from '../../../environments/environment';
 
 @Injectable()
 export class ApiService {
