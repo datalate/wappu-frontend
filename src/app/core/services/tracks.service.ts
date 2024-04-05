@@ -5,9 +5,9 @@ import { DateFilter, Track } from 'src/app/core/models';
 
 @Injectable()
 export class TracksService {
-  readonly resourcePath = 'tracks';
+  private readonly resourcePath = 'tracks';
 
-  constructor(private apiService: ApiService) {}
+  public constructor(private readonly apiService: ApiService) {}
 
   public query(filter: DateFilter = {}): Observable<Track[]> {
     const params: any = {};

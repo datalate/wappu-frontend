@@ -14,11 +14,11 @@ export class PlaylistComponent implements OnInit {
   public tracks: Track[] | undefined;
   public programs: Program[] | undefined;
 
-  constructor(
-    private tracksService: TracksService,
-    private programsService: ProgramsService,
-    private route: ActivatedRoute,
-    private router: Router,
+  public constructor(
+    private readonly tracksService: TracksService,
+    private readonly programsService: ProgramsService,
+    private readonly route: ActivatedRoute,
+    private readonly router: Router,
   ) {}
 
   public ngOnInit(): void {
@@ -29,7 +29,6 @@ export class PlaylistComponent implements OnInit {
         );
         if (radio) {
           this.updatePlayed(radio);
-          return;
         }
       }
 
@@ -62,7 +61,7 @@ export class PlaylistComponent implements OnInit {
       .pipe(first())
       .subscribe((programs: Program[]) => {
         this.programs = programs.sort((a, b) =>
-          this.sortByStartAt(a, b, false),
+          PlaylistComponent.sortByStartAt(a, b, false),
         );
       });
 
@@ -73,17 +72,17 @@ export class PlaylistComponent implements OnInit {
       })
       .pipe(first())
       .subscribe((tracks: Track[]) => {
-        this.tracks = tracks.sort((a, b) => this.sortByPlayedAt(a, b, false));
+        this.tracks = tracks.sort((a, b) => PlaylistComponent.sortByPlayedAt(a, b, false));
       });
   }
 
-  private sortByPlayedAt(a: Track, b: Track, descending = true): number {
+  private static sortByPlayedAt(a: Track, b: Track, descending = true): number {
     return descending
       ? b.playedAt.getTime() - a.playedAt.getTime()
       : a.playedAt.getTime() - b.playedAt.getTime();
   }
 
-  private sortByStartAt(a: Program, b: Program, descending = true): number {
+  private static sortByStartAt(a: Program, b: Program, descending = true): number {
     return descending
       ? b.startAt.getTime() - a.startAt.getTime()
       : a.startAt.getTime() - b.startAt.getTime();

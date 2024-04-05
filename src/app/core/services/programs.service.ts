@@ -5,9 +5,9 @@ import { DateFilter, Program } from 'src/app/core/models';
 
 @Injectable()
 export class ProgramsService {
-  readonly resourcePath = 'programs';
+  private readonly resourcePath = 'programs';
 
-  constructor(private apiService: ApiService) {}
+  public constructor(private readonly apiService: ApiService) {}
 
   public query(filter: DateFilter = {}): Observable<Program[]> {
     const params: any = {};
