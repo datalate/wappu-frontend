@@ -6,16 +6,9 @@ import { PlaylistModule } from 'src/app/playlist/playlist.module';
 import { CoreModule } from 'src/app/core/core.module';
 
 @NgModule({
-  declarations: [
-    AppComponent,
-  ],
-  imports: [
-    BrowserModule,
-    CoreModule,
-    PlaylistModule,
-    AppRoutingModule,
-  ],
+  declarations: [AppComponent],
+  imports: [BrowserModule, CoreModule, PlaylistModule, AppRoutingModule],
   providers: [],
-  bootstrap: [AppComponent]
+  bootstrap: [AppComponent],
 })
-export class AppModule { }
+export class AppModule {}

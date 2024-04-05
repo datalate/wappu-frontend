@@ -11,12 +11,12 @@ const routes: Routes = [
   {
     path: '**',
     redirectTo: LATEST_RADIO,
-    pathMatch: 'full'
+    pathMatch: 'full',
   },
 ];
 
 @NgModule({
   imports: [RouterModule.forChild(routes)],
-  exports: [RouterModule]
+  exports: [RouterModule],
 })
-export class PlaylistRoutingModule { }
+export class PlaylistRoutingModule {}

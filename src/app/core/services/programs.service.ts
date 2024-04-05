@@ -7,7 +7,7 @@ import { DateFilter, Program } from 'src/app/core/models';
 export class ProgramsService {
   readonly resourcePath = 'programs';
 
-  constructor(private apiService: ApiService) { }
+  constructor(private apiService: ApiService) {}
 
   public query(filter: DateFilter = {}): Observable<Program[]> {
     const params: any = {};
@@ -23,7 +23,7 @@ export class ProgramsService {
   }
 
   public get(id: number): Observable<Program> {
-    return this.apiService.get<Program>(`${ this.resourcePath }/${ id }`);
+    return this.apiService.get<Program>(`${this.resourcePath}/${id}`);
   }
 
   // public delete(id: number): Observable<{}> {

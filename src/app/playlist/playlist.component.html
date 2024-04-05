@@ -1,15 +1,18 @@
 <div class="playlist">
   <nav class="playlist-nav">
-    <a *ngFor="let edition of radioEditions" [routerLink]="'/' + edition">[{{edition}}]</a>
+    <a *ngFor="let edition of radioEditions" [routerLink]="'/' + edition"
+      >[{{ edition }}]</a
+    >
   </nav>
   <h1 class="title">Wappuradion soitetut</h1>
-  <p *ngIf="!tracks || !programs">
-    Ladataan...
-  </p>
+  <p *ngIf="!tracks || !programs">Ladataan...</p>
   <p *ngIf="tracks?.length === 0 || programs?.length === 0">
     Ei näytettäviä kappaleita
   </p>
   <div *ngFor="let program of programs">
-    <app-playlist-program [program]="program" [tracks]="getTracksForProgram(program)"></app-playlist-program>
+    <app-playlist-program
+      [program]="program"
+      [tracks]="getTracksForProgram(program)"
+    ></app-playlist-program>
   </div>
 </div>

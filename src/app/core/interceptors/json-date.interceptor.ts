@@ -1,21 +1,33 @@
-import { HttpInterceptor, HttpRequest, HttpHandler, HttpEvent, HttpResponse } from '@angular/common/http';
+import {
+  HttpInterceptor,
+  HttpRequest,
+  HttpHandler,
+  HttpEvent,
+  HttpResponse,
+} from '@angular/common/http';
 import { Observable } from 'rxjs';
 import { map } from 'rxjs/operators';
 import { Injectable } from '@angular/core';
 
 @Injectable()
 export class JsonDateInterceptor implements HttpInterceptor {
-  private readonly isoDateFormat = /^\d{4}-\d\d-\d\dT\d\d:\d\d:\d\d(\.\d+)?(([+-]\d\d:\d\d)|Z)?$/;
+  private readonly isoDateFormat =
+    /^\d{4}-\d\d-\d\dT\d\d:\d\d:\d\d(\.\d+)?(([+-]\d\d:\d\d)|Z)?$/;
 
-  public intercept(req: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<any>> {
-    return next.handle(req).pipe(map((event: HttpEvent<any>) => {
-      if (event instanceof HttpResponse) {
-        const body = event.body;
-        this.convert(body);
-      }
+  public intercept(
+    req: HttpRequest<any>,
+    next: HttpHandler,
+  ): Observable<HttpEvent<any>> {
+    return next.handle(req).pipe(
+      map((event: HttpEvent<any>) => {
+        if (event instanceof HttpResponse) {
+          const body = event.body;
+          this.convert(body);
+        }
 
-      return event;
-    }));
+        return event;
+      }),
+    );
   }
 
   private convert(body: any): any {

@@ -7,7 +7,7 @@ import { DateFilter, Track } from 'src/app/core/models';
 export class TracksService {
   readonly resourcePath = 'tracks';
 
-  constructor(private apiService: ApiService) { }
+  constructor(private apiService: ApiService) {}
 
   public query(filter: DateFilter = {}): Observable<Track[]> {
     const params: any = {};
@@ -23,7 +23,7 @@ export class TracksService {
   }
 
   public get(id: number): Observable<Track> {
-    return this.apiService.get<Track>(`${ this.resourcePath }/${ id }`);
+    return this.apiService.get<Track>(`${this.resourcePath}/${id}`);
   }
 
   // public delete(id: number): Observable<{}> {
