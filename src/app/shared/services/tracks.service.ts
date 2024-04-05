@@ -1,16 +1,15 @@
-import { Injectable } from '@angular/core';
+import { inject, Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
+import { ApiService } from 'src/app/shared/services/api.service';
+import { DateFilter, Track } from 'src/app/shared/models';
 
-import { ApiService } from './api.service';
-import { Track, ModelFilter } from '../models';
-
-@Injectable()
+@Injectable({ providedIn: 'root' })
 export class TracksService {
-  readonly resourcePath = 'tracks';
+  private readonly apiService = inject(ApiService);
 
-  constructor(private apiService: ApiService) { }
+  private readonly resourcePath = 'tracks';
 
-  public query(filter: ModelFilter = {}): Observable<Track[]> {
+  public query(filter: DateFilter = {}): Observable<Track[]> {
     const params: any = {};
 
     if (filter.startDate) {
@@ -24,7 +23,7 @@ export class TracksService {
   }
 
   public get(id: number): Observable<Track> {
-    return this.apiService.get<Track>(`${ this.resourcePath }/${ id }`);
+    return this.apiService.get<Track>(`${this.resourcePath}/${id}`);
   }
 
   // public delete(id: number): Observable<{}> {

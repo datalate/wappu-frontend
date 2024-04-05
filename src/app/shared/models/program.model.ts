@@ -1,5 +1,5 @@
 export interface Program {
-  id?: number;
+  id: number;
   title: string;
   startAt: Date;
   endAt: Date;

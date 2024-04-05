@@ -1,16 +1,15 @@
-import { Injectable } from '@angular/core';
+import { inject, Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
+import { ApiService } from 'src/app/shared/services/api.service';
+import { DateFilter, Program } from 'src/app/shared/models';
 
-import { ApiService } from './api.service';
-import { Program, ModelFilter } from '../models';
-
-@Injectable()
+@Injectable({ providedIn: 'root' })
 export class ProgramsService {
-  readonly resourcePath = 'programs';
+  private readonly apiService = inject(ApiService);
 
-  constructor(private apiService: ApiService) { }
+  private readonly resourcePath = 'programs';
 
-  public query(filter: ModelFilter = {}): Observable<Program[]> {
+  public query(filter: DateFilter = {}): Observable<Program[]> {
     const params: any = {};
 
     if (filter.startDate) {
@@ -24,7 +23,7 @@ export class ProgramsService {
   }
 
   public get(id: number): Observable<Program> {
-    return this.apiService.get<Program>(`${ this.resourcePath }/${ id }`);
+    return this.apiService.get<Program>(`${this.resourcePath}/${id}`);
   }
 
   // public delete(id: number): Observable<{}> {

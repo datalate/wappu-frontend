@@ -1,18 +1,37 @@
-<div *ngIf="tracks.length > 0">
-  <div class="program-info" [ngClass]="{'hidden': !show}" (click)="show = !show" [title]="show ? 'Piilota' : 'Näytä'">
-    <h3>{{program.title}}</h3>
-    <h5>{{program.startAt | date:'EEEE, MMMM d, H:mm'}} - {{program.endAt | date:'EEEE, MMMM d, H:mm'}}</h5>
+@if (tracks().length > 0) {
+  <div>
+    <div
+      class="program-info"
+      [class.hidden]="!show()"
+      (click)="toggle()"
+      [title]="show() ? 'Piilota' : 'Näytä'"
+    >
+      <h3>{{ program().title }}</h3>
+      <h5>
+        {{ program().startAt | date: "EEEE, MMMM d, H:mm" }} -
+        {{ program().endAt | date: "EEEE, MMMM d, H:mm" }}
+      </h5>
+    </div>
+    <table class="program-tracks" [class.hidden]="!show()">
+      <tr>
+        <th class="time">Aika</th>
+        <th class="artist">Artisti</th>
+        <th class="title">Kappale</th>
+      </tr>
+      @for (track of tracks(); track track.id) {
+        <tr>
+          <td class="time" [title]="track.playedAt">
+            {{ track.playedAt | date: "HH:mm" }}
+          </td>
+          <td
+            class="artist"
+            [title]="track.artist ? track.artist : 'Ei artistia'"
+          >
+            {{ track.artist ? track.artist : "Ei artistia" }}
+          </td>
+          <td class="title" [title]="track.title">{{ track.title }}</td>
+        </tr>
+      }
+    </table>
   </div>
-  <table class="program-tracks" *ngIf="tracks.length > 0" [ngClass]="{'hidden': !show}">
-    <tr>
-      <th class="time">Aika</th>
-      <th class="artist">Artisti</th>
-      <th class="title">Kappale</th>
-    </tr>
-    <tr *ngFor="let track of tracks">
-      <td class="time" [title]="track.playedAt">{{track.playedAt | date:'HH:mm'}}</td>
-      <td class="artist" [title]="track.artist ? track.artist : 'Ei artistia'">{{track.artist ? track.artist : 'Ei artistia'}}</td>
-      <td class="title" [title]="track.title">{{track.title}}</td>
-    </tr>
-  </table>
-</div>
+}
