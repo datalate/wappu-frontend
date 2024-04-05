@@ -1,3 +1,3 @@
-export * from './api.service';
-export * from './tracks.service';
-export * from './programs.service';
+export * from 'src/app/core/services/api.service';
+export * from 'src/app/core/services/tracks.service';
+export * from 'src/app/core/services/programs.service';

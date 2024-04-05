@@ -1,4 +1,4 @@
-import { Radio } from '../../core/models';
+import { Radio } from 'src/app/core/models';
 
 export const RADIO_EDITIONS: Radio[] = [
   { id: '2016', startAt: new Date('2016-04-19T00:00:00+03:00'), endAt: new Date('2016-04-30T23:59:59+03:00') },

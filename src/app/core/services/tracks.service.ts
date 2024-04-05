@@ -1,8 +1,7 @@
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
-
-import { ApiService } from './api.service';
-import { Track, ModelFilter } from '../models';
+import { ApiService } from 'src/app/core/services/api.service';
+import { DateFilter, Track } from 'src/app/core/models';
 
 @Injectable()
 export class TracksService {
@@ -10,7 +9,7 @@ export class TracksService {
 
   constructor(private apiService: ApiService) { }
 
-  public query(filter: ModelFilter = {}): Observable<Track[]> {
+  public query(filter: DateFilter = {}): Observable<Track[]> {
     const params: any = {};
 
     if (filter.startDate) {

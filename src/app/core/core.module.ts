@@ -1,13 +1,7 @@
 import { NgModule } from '@angular/core';
 import { HTTP_INTERCEPTORS, HttpClientModule } from '@angular/common/http';
-
-import { JsonDateInterceptor } from './interceptors';
-
-import {
-  ApiService,
-  TracksService,
-  ProgramsService
-} from './services';
+import { JsonDateInterceptor } from 'src/app/core/interceptors';
+import { ApiService, ProgramsService, TracksService } from 'src/app/core/services';
 
 @NgModule({
   imports: [

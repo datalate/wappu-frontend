@@ -1,10 +1,9 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
-
-import { TracksService, ProgramsService } from '../core/services';
-import { Radio, Track, Program } from '../core/models';
-import { RADIO_EDITIONS, LATEST_RADIO } from './shared';
 import { first } from 'rxjs';
+import { ProgramsService, TracksService } from 'src/app/core/services';
+import { Program, Radio, Track } from 'src/app/core/models';
+import { LATEST_RADIO, RADIO_EDITIONS } from 'src/app/playlist/shared';
 
 @Component({
   selector: 'app-playlist',

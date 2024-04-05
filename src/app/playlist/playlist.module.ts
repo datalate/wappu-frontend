@@ -1,9 +1,8 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
-
-import { PlaylistComponent } from './playlist.component';
-import { PlaylistRoutingModule } from './playlist-routing.module';
-import { ProgramComponent } from './program/program.component';
+import { PlaylistComponent } from 'src/app/playlist/playlist.component';
+import { ProgramComponent } from 'src/app/playlist/program/program.component';
+import { PlaylistRoutingModule } from 'src/app/playlist/playlist-routing.module';
 
 @NgModule({
   declarations: [

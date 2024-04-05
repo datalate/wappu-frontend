@@ -1,8 +1,7 @@
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
-
-import { ApiService } from './api.service';
-import { Program, ModelFilter } from '../models';
+import { ApiService } from 'src/app/core/services/api.service';
+import { DateFilter, Program } from 'src/app/core/models';
 
 @Injectable()
 export class ProgramsService {
@@ -10,7 +9,7 @@ export class ProgramsService {
 
   constructor(private apiService: ApiService) { }
 
-  public query(filter: ModelFilter = {}): Observable<Program[]> {
+  public query(filter: DateFilter = {}): Observable<Program[]> {
     const params: any = {};
 
     if (filter.startDate) {

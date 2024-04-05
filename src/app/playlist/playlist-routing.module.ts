@@ -1,8 +1,7 @@
 import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
-
-import { PlaylistComponent } from './playlist.component';
-import { LATEST_RADIO } from './shared';
+import { PlaylistComponent } from 'src/app/playlist/playlist.component';
+import { LATEST_RADIO } from 'src/app/playlist/shared';
 
 const routes: Routes = [
   {
