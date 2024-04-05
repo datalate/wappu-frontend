@@ -1,13 +1,13 @@
-import { Injectable } from '@angular/core';
+import { inject, Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 import { ApiService } from 'src/app/core/services/api.service';
 import { DateFilter, Program } from 'src/app/core/models';
 
 @Injectable()
 export class ProgramsService {
-  private readonly resourcePath = 'programs';
+  private readonly apiService = inject(ApiService);
 
-  public constructor(private readonly apiService: ApiService) {}
+  private readonly resourcePath = 'programs';
 
   public query(filter: DateFilter = {}): Observable<Program[]> {
     const params: any = {};

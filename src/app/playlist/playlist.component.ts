@@ -1,4 +1,4 @@
-import { ChangeDetectionStrategy, Component, OnInit, signal } from '@angular/core';
+import { ChangeDetectionStrategy, Component, inject, OnInit, signal } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { catchError, of, zip } from 'rxjs';
 import { ProgramsService, TracksService } from 'src/app/core/services';
@@ -14,18 +14,16 @@ import { map } from 'rxjs/operators';
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class PlaylistComponent implements OnInit {
+  private readonly tracksService = inject(TracksService);
+  private readonly programsService = inject(ProgramsService);
+  private readonly route = inject(ActivatedRoute);
+  private readonly router = inject(Router);
+
   public tracks = signal<Track[]>([]);
   public programs = signal<Program[]>([]);
   public loading = signal(false);
 
   private routeParams$ = this.route.params.pipe(takeUntilDestroyed());
-
-  public constructor(
-    private readonly tracksService: TracksService,
-    private readonly programsService: ProgramsService,
-    private readonly route: ActivatedRoute,
-    private readonly router: Router,
-  ) {}
 
   public ngOnInit(): void {
     this.routeParams$
