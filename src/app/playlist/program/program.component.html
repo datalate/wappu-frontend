@@ -5,17 +5,14 @@
       [class.hidden]="!show()"
       (click)="toggle()"
       [title]="show() ? 'Piilota' : 'Näytä'"
-      >
+    >
       <h3>{{ program().title }}</h3>
       <h5>
         {{ program().startAt | date: "EEEE, MMMM d, H:mm" }} -
         {{ program().endAt | date: "EEEE, MMMM d, H:mm" }}
       </h5>
     </div>
-    <table
-      class="program-tracks"
-      [class.hidden]="!show()"
-      >
+    <table class="program-tracks" [class.hidden]="!show()">
       <tr>
         <th class="time">Aika</th>
         <th class="artist">Artisti</th>
@@ -26,7 +23,10 @@
           <td class="time" [title]="track.playedAt">
             {{ track.playedAt | date: "HH:mm" }}
           </td>
-          <td class="artist" [title]="track.artist ? track.artist : 'Ei artistia'">
+          <td
+            class="artist"
+            [title]="track.artist ? track.artist : 'Ei artistia'"
+          >
             {{ track.artist ? track.artist : "Ei artistia" }}
           </td>
           <td class="title" [title]="track.title">{{ track.title }}</td>

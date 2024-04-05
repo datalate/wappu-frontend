@@ -1,9 +1,9 @@
 import { inject, Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
-import { ApiService } from 'src/app/core/services/api.service';
-import { DateFilter, Program } from 'src/app/core/models';
+import { ApiService } from 'src/app/shared/services/api.service';
+import { DateFilter, Program } from 'src/app/shared/models';
 
-@Injectable()
+@Injectable({ providedIn: 'root' })
 export class ProgramsService {
   private readonly apiService = inject(ApiService);
 

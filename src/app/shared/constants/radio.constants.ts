@@ -1,4 +1,4 @@
-import { Radio } from 'src/app/core/models';
+import { Radio } from 'src/app/shared/models';
 
 export const RADIO_EDITIONS: Radio[] = [
   {
