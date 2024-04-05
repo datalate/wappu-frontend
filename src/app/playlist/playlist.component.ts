@@ -1,18 +1,24 @@
-import { Component, OnInit } from '@angular/core';
+import { ChangeDetectionStrategy, Component, OnInit, signal } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
-import { first } from 'rxjs';
+import { catchError, of, zip } from 'rxjs';
 import { ProgramsService, TracksService } from 'src/app/core/services';
 import { Program, Radio, Track } from 'src/app/core/models';
 import { LATEST_RADIO, RADIO_EDITIONS } from 'src/app/playlist/shared';
+import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
+import { map } from 'rxjs/operators';
 
 @Component({
   selector: 'app-playlist',
   templateUrl: './playlist.component.html',
   styleUrls: ['./playlist.component.scss'],
+  changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class PlaylistComponent implements OnInit {
-  public tracks: Track[] | undefined;
-  public programs: Program[] | undefined;
+  public tracks = signal<Track[]>([]);
+  public programs = signal<Program[]>([]);
+  public loading = signal(false);
+
+  private routeParams$ = this.route.params.pipe(takeUntilDestroyed());
 
   public constructor(
     private readonly tracksService: TracksService,
@@ -22,13 +28,15 @@ export class PlaylistComponent implements OnInit {
   ) {}
 
   public ngOnInit(): void {
-    this.route.params.subscribe((params: any) => {
+    this.routeParams$
+      .subscribe((params: any) => {
       if (params['radio']) {
         const radio = RADIO_EDITIONS.find(
           (edition) => edition.id === params['radio'],
         );
         if (radio) {
           this.updatePlayed(radio);
+          return;
         }
       }
 
@@ -42,7 +50,7 @@ export class PlaylistComponent implements OnInit {
 
   public getTracksForProgram(program: Program): Track[] {
     return (
-      this.tracks?.filter(
+      this.tracks().filter(
         (track) =>
           track.playedAt >= program.startAt && track.playedAt < program.endAt,
       ) ?? []
@@ -50,29 +58,28 @@ export class PlaylistComponent implements OnInit {
   }
 
   private updatePlayed(radio: Radio): void {
-    this.programs = undefined;
-    this.tracks = undefined;
+    const queryParams = {
+      startDate: radio.startAt,
+      endDate: radio.endAt,
+    };
 
-    this.programsService
-      .query({
-        startDate: radio.startAt,
-        endDate: radio.endAt,
-      })
-      .pipe(first())
-      .subscribe((programs: Program[]) => {
-        this.programs = programs.sort((a, b) =>
+    this.programs.set([]);
+    this.tracks.set([]);
+    this.loading.set(true);
+
+    zip([this.programsService.query(queryParams), this.tracksService.query(queryParams)])
+      .pipe(
+        map(([programs, tracks]) => ({ programs, tracks })),
+        catchError(() => of({ programs: [], tracks: [] })),
+      )
+      .subscribe(({ programs, tracks }) => {
+        this.programs.set(programs.sort((a, b) =>
           PlaylistComponent.sortByStartAt(a, b, false),
-        );
-      });
-
-    this.tracksService
-      .query({
-        startDate: radio.startAt,
-        endDate: radio.endAt,
-      })
-      .pipe(first())
-      .subscribe((tracks: Track[]) => {
-        this.tracks = tracks.sort((a, b) => PlaylistComponent.sortByPlayedAt(a, b, false));
+        ));
+        this.tracks.set(tracks.sort((a, b) =>
+          PlaylistComponent.sortByPlayedAt(a, b, false),
+        ));
+        this.loading.set(false);
       });
   }
 

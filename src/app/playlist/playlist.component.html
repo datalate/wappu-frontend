@@ -5,14 +5,14 @@
     }
     </nav>
     <h1 class="title">Wappuradion soitetut</h1>
-    @if (!tracks || !programs) {
+    @if (loading()) {
       <p>Ladataan...</p>
     }
-    @else if (tracks.length === 0 || programs.length === 0) {
+    @else if (tracks().length === 0 || programs().length === 0) {
       <p>Ei näytettäviä kappaleita</p>
     }
     @else {
-      @for (program of programs; track program) {
+      @for (program of programs(); track program.id) {
         <div>
           <app-playlist-program
             [program]="program"
