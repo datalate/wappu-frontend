@@ -8,8 +8,8 @@
     >
       <h3>{{ program().title }}</h3>
       <h5>
-        {{ program().startAt | date: "EEEE, MMMM d, H:mm" }} -
-        {{ program().endAt | date: "EEEE, MMMM d, H:mm" }}
+        {{ program().startAt | date: 'EEE, MMM d, HH:mm' }} -
+        {{ program().endAt | date: "EEE, MMM d, HH:mm" }}
       </h5>
     </div>
     <table class="program-tracks" [class.hidden]="!show()">
