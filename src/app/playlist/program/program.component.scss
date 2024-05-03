@@ -46,23 +46,21 @@
 
   td {
     font-family: "Lucida Console", Monaco, monospace;
-    font-size: 1.05em;
-    padding: 3px 10px;
+    font-size: 1em;
+    padding: 3px 6px;
     white-space: nowrap;
     overflow: hidden;
     text-overflow: ellipsis;
   }
 
   .time {
-    width: 60px;
+    width: 50px;
+    text-align: center;
+  }
+
+  .artist,
+  .title {
+    text-align: left;
   }
 }
 
-.time {
-  text-align: right;
-}
-
-.artist,
-.title {
-  text-align: left;
-}
