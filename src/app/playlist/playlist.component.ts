@@ -65,7 +65,8 @@ export class PlaylistComponent implements OnInit {
   public editTrack(track: Track): void {
     this.tracksService.save(track).subscribe((track) => {
       this.tracks.set(
-        this.tracks().map((t) => (t.id === track.id ? track : t)),
+        this.tracks().map((t) => (t.id === track.id ? track : t))
+          .sort((a, b) => PlaylistComponent.sortByPlayedAt(a, b, false))
       );
     });
   }

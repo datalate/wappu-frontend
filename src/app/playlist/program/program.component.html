@@ -17,53 +17,70 @@
         <th class="time">Aika</th>
         <th class="artist">Artisti</th>
         <th class="title">Kappale</th>
-        <th class="actions" requireApiKey></th>
+        <th class="actions" requireApiKey>&nbsp;</th>
       </tr>
       @for (track of tracks(); track track.id) {
         <tr>
-          <td class="time" [title]="track.playedAt">
-            {{ track.playedAt | date: "HH:mm" }}
-          </td>
-          <td
-            class="artist"
-            [title]="track.artist ? track.artist : 'Ei artistia'"
-          >
-            @if (editingTrack() === track) {
+          @if (editingTrack() === track) {
+            <td class="time">
+              <input
+                type="text"
+                pattern="([01]?[0-9]|2[0-3]):[0-5][0-9]"
+                [(ngModel)]="editPlayedAt"
+              />
+            </td>
+            <td class="artist">
               <input type="text" [(ngModel)]="editArtist" />
-            } @else {
-              {{ track.artist ? track.artist : "Ei artistia" }}
-            }
-          </td>
-          <td class="title" [title]="track.title">
-            @if (editingTrack() === track) {
+            </td>
+            <td class="title">
               <input type="text" [(ngModel)]="editTitle" />
-            } @else {
+            </td>
+            <td class="actions" requireApiKey>
+              <button
+                (click)="save(track)"
+                type="submit"
+                title="Save"
+              >
+                [S]
+              </button>
+              <button
+                (click)="cancelEdit()"
+                type="button"
+                title="Cancel"
+              >
+                [C]
+              </button>
+            </td>
+          } @else {
+            <td class="time" [title]="track.playedAt">
+              {{ track.playedAt | date: "HH:mm" }}
+            </td>
+            <td
+              class="artist"
+              [title]="track.artist ? track.artist : 'Ei artistia'"
+            >
+              {{ track.artist ? track.artist : "Ei artistia" }}
+            </td>
+            <td class="title" [title]="track.title">
               {{ track.title }}
-            }
-          </td>
-          <td class="actions" requireApiKey>
-            <button
-              *ngIf="editingTrack() === null"
-              (click)="edit(track)"
-              title="Edit"
-            >
-              [E]
-            </button>
-            <button
-              *ngIf="editingTrack() === track"
-              (click)="save(track)"
-              title="Save"
-            >
-              [S]
-            </button>
-            <button
-              [disabled]="editingTrack() === track"
-              (click)="delete(track)"
-              title="Delete"
-            >
-              [D]
-            </button>
-          </td>
+            </td>
+            <td class="actions" requireApiKey>
+              <button
+                (click)="edit(track)"
+                type="button"
+                title="Edit"
+              >
+                [E]
+              </button>
+              <button
+                (click)="delete(track)"
+                type="button"
+                title="Delete"
+              >
+                [D]
+              </button>
+            </td>
+          }
         </tr>
       }
     </table>
