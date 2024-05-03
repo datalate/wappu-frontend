@@ -1,13 +1,14 @@
 import {
   ChangeDetectionStrategy,
   Component,
+  inject,
   input,
   output,
   signal,
 } from '@angular/core';
 import { Program, Track } from 'src/app/shared/models';
 import { DatePipe, NgIf } from '@angular/common';
-import { FormsModule } from '@angular/forms';
+import { FormBuilder, ReactiveFormsModule, Validators } from '@angular/forms';
 import { RequireApiKeyDirective } from 'src/app/shared/directives';
 
 @Component({
@@ -16,9 +17,11 @@ import { RequireApiKeyDirective } from 'src/app/shared/directives';
   styleUrls: ['./program.component.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush,
   standalone: true,
-  imports: [DatePipe, NgIf, FormsModule, RequireApiKeyDirective],
+  imports: [DatePipe, NgIf, ReactiveFormsModule, RequireApiKeyDirective],
 })
 export class ProgramComponent {
+  private readonly formBuilder = inject(FormBuilder);
+
   public readonly program = input.required<Program>();
   public readonly tracks = input.required<Track[]>();
 
@@ -28,18 +31,22 @@ export class ProgramComponent {
   public readonly onTrackEdited = output<Track>();
   public readonly onTrackDeleted = output<Track>();
 
-  public editPlayedAt = '';
-  public editArtist: string | undefined = '';
-  public editTitle = '';
+  public readonly trackForm = this.formBuilder.group({
+    artist: '',
+    title: ['', Validators.required],
+    playedAt: ['', [Validators.required, Validators.pattern(/^([01]?[0-9]|2[0-3]):[0-5][0-9]$/)]],
+  });
 
   public toggle(): void {
     this.show.set(!this.show());
   }
 
   public edit(track: Track): void {
-    this.editArtist = track.artist;
-    this.editTitle = track.title;
-    this.editPlayedAt = `${track.playedAt.getHours().toString().padStart(2, "0")}:${track.playedAt.getMinutes().toString().padStart(2, "0")}`
+    this.trackForm.patchValue({
+      artist: track.artist,
+      title: track.title,
+      playedAt: `${track.playedAt.getHours().toString().padStart(2, '0')}:${track.playedAt.getMinutes().toString().padStart(2, '0')}`,
+    });
 
     this.editingTrack.set(track);
   }
@@ -49,23 +56,25 @@ export class ProgramComponent {
   }
 
   public save(track: Track): void {
-    // TODO: proper datetime validation
-    const [hours, minutes] = this.editPlayedAt.split(':');
+    this.trackForm.markAllAsTouched();
+    if (!this.trackForm.valid) {
+      return;
+    }
+
+    const { artist, title, playedAt } = this.trackForm.getRawValue();
+
+    const [hours, minutes] = playedAt!.split(':');
 
     const numHours = Number(hours);
     const numMinutes = Number(minutes);
-
-    if (isNaN(numHours) || isNaN(numMinutes)) {
-      throw new Error('Invalid time format');
-    }
 
     let newPlayedAt = new Date(track.playedAt);
     newPlayedAt.setHours(numHours, numMinutes, 0);
 
     this.onTrackEdited.emit({
       ...track,
-      artist: this.editArtist,
-      title: this.editTitle,
+      artist: artist,
+      title: title!,
       playedAt: newPlayedAt,
     });
 

@@ -12,77 +12,75 @@
         {{ program().endAt | date: "EEE, MMM d, HH:mm" }}
       </h5>
     </div>
-    <table class="program-tracks" [class.hidden]="!show()">
-      <tr>
-        <th class="time">Aika</th>
-        <th class="artist">Artisti</th>
-        <th class="title">Kappale</th>
-        <th class="actions" requireApiKey>&nbsp;</th>
-      </tr>
-      @for (track of tracks(); track track.id) {
+    <form [formGroup]="trackForm">
+      <table class="program-tracks" [class.hidden]="!show()">
         <tr>
-          @if (editingTrack() === track) {
-            <td class="time">
-              <input
-                type="text"
-                pattern="([01]?[0-9]|2[0-3]):[0-5][0-9]"
-                [(ngModel)]="editPlayedAt"
-              />
-            </td>
-            <td class="artist">
-              <input type="text" [(ngModel)]="editArtist" />
-            </td>
-            <td class="title">
-              <input type="text" [(ngModel)]="editTitle" />
-            </td>
-            <td class="actions" requireApiKey>
-              <button
-                (click)="save(track)"
-                type="submit"
-                title="Save"
-              >
-                [S]
-              </button>
-              <button
-                (click)="cancelEdit()"
-                type="button"
-                title="Cancel"
-              >
-                [C]
-              </button>
-            </td>
-          } @else {
-            <td class="time" [title]="track.playedAt">
-              {{ track.playedAt | date: "HH:mm" }}
-            </td>
-            <td
-              class="artist"
-              [title]="track.artist ? track.artist : 'Ei artistia'"
-            >
-              {{ track.artist ? track.artist : "Ei artistia" }}
-            </td>
-            <td class="title" [title]="track.title">
-              {{ track.title }}
-            </td>
-            <td class="actions" requireApiKey>
-              <button
-                (click)="edit(track)"
-                type="button"
-                title="Edit"
-              >
-                [E]
-              </button>
-              <button
-                (click)="delete(track)"
-                type="button"
-                title="Delete"
-              >
-                [D]
-              </button>
-            </td>
-          }
+          <th class="time">Aika</th>
+          <th class="artist">Artisti</th>
+          <th class="title">Kappale</th>
+          <th class="actions" requireApiKey>&nbsp;</th>
         </tr>
-      }
-    </table>
+        @for (track of tracks(); track track.id) {
+          <tr>
+            @if (editingTrack() === track) {
+              <td class="time">
+                <input type="text" formControlName="playedAt" />
+              </td>
+              <td class="artist">
+                <input type="text" formControlName="artist" />
+              </td>
+              <td class="title">
+                <input type="text" formControlName="title" />
+              </td>
+              <td class="actions" requireApiKey>
+                <button
+                  (click)="save(track)"
+                  type="submit"
+                  title="Save"
+                >
+                  [S]
+                </button>
+                <button
+                  (click)="cancelEdit()"
+                  type="button"
+                  title="Cancel"
+                >
+                  [C]
+                </button>
+              </td>
+            } @else {
+              <td class="time" [title]="track.playedAt">
+                {{ track.playedAt | date: "HH:mm" }}
+              </td>
+              <td
+                class="artist"
+                [title]="track.artist ? track.artist : 'Ei artistia'"
+              >
+                {{ track.artist ? track.artist : "Ei artistia" }}
+              </td>
+              <td class="title" [title]="track.title">
+                {{ track.title }}
+              </td>
+              <td class="actions" requireApiKey>
+                <button
+                  (click)="edit(track)"
+                  type="button"
+                  title="Edit"
+                >
+                  [E]
+                </button>
+                <button
+                  (click)="delete(track)"
+                  type="button"
+                  title="Delete"
+                >
+                  [D]
+                </button>
+              </td>
+            }
+          </tr>
+        }
+      </table>
+    </form>
   </div>
 }
