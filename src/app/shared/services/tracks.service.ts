@@ -27,12 +27,15 @@ export class TracksService {
   }
 
   public delete(id: number): Observable<{}> {
-    return this.apiService.delete(`${ this.resourcePath }/${ id }`);
+    return this.apiService.delete(`${this.resourcePath}/${id}`);
   }
 
   public save(track: Track): Observable<Track> {
     if (track.id) {
-      return this.apiService.put<Track>(`${ this.resourcePath }/${ track.id }`, track);
+      return this.apiService.put<Track>(
+        `${this.resourcePath}/${track.id}`,
+        track,
+      );
     } else {
       return this.apiService.post<Track>(this.resourcePath, track);
     }

@@ -43,7 +43,11 @@ export class ProgramComponent {
   }
 
   public save(track: Track): void {
-    this.onTrackEdited.emit({ ...track, artist: this.editArtist, title: this.editTitle });
+    this.onTrackEdited.emit({
+      ...track,
+      artist: this.editArtist,
+      title: this.editTitle,
+    });
 
     this.editingTrack.set(null);
   }

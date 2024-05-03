@@ -13,20 +13,26 @@ export class Configuration {
   private static loadConfiguration(configurationFile: string): Promise<void> {
     const ts = Math.round(new Date().getTime() / 1000);
 
-    return new Promise<void>((resolve: () => void, reject: (s: string) => any): void => {
-      fetch(`${configurationFile}?t=${ts}`)
-        .then((response: Response): void => {
-          response
-            .json()
-            .then((configuration: ApplicationConfiguration): void => {
-              Configuration.config = configuration;
-              Configuration.initialized = true;
+    return new Promise<void>(
+      (resolve: () => void, reject: (s: string) => any): void => {
+        fetch(`${configurationFile}?t=${ts}`)
+          .then((response: Response): void => {
+            response
+              .json()
+              .then((configuration: ApplicationConfiguration): void => {
+                Configuration.config = configuration;
+                Configuration.initialized = true;
 
-              resolve();
-            })
-            .catch((error: any): void => reject(`Invalid JSON in file '${configurationFile}': ${error}`));
-        })
-        .catch((error: any): void => reject(`Could not load file '${configurationFile}': ${error}`));
-    });
+                resolve();
+              })
+              .catch((error: any): void =>
+                reject(`Invalid JSON in file '${configurationFile}': ${error}`),
+              );
+          })
+          .catch((error: any): void =>
+            reject(`Could not load file '${configurationFile}': ${error}`),
+          );
+      },
+    );
   }
 }

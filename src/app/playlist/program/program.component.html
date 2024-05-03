@@ -8,7 +8,7 @@
     >
       <h3>{{ program().title }}</h3>
       <h5>
-        {{ program().startAt | date: 'EEE, MMM d, HH:mm' }} -
+        {{ program().startAt | date: "EEE, MMM d, HH:mm" }} -
         {{ program().endAt | date: "EEE, MMM d, HH:mm" }}
       </h5>
     </div>
@@ -29,28 +29,40 @@
             [title]="track.artist ? track.artist : 'Ei artistia'"
           >
             @if (editingTrack() === track) {
-              <input
-                type="text"
-                [(ngModel)]="editArtist"
-              />
+              <input type="text" [(ngModel)]="editArtist" />
             } @else {
               {{ track.artist ? track.artist : "Ei artistia" }}
             }
           </td>
           <td class="title" [title]="track.title">
             @if (editingTrack() === track) {
-              <input
-                type="text"
-                [(ngModel)]="editTitle"
-              />
+              <input type="text" [(ngModel)]="editTitle" />
             } @else {
               {{ track.title }}
             }
           </td>
           <td class="actions" requireApiKey>
-            <button *ngIf="editingTrack() === null" (click)="edit(track)" title="Edit">[E]</button>
-            <button *ngIf="editingTrack() === track" (click)="save(track)" title="Save">[S]</button>
-            <button [disabled]="editingTrack() === track" (click)="delete(track)" title="Delete">[D]</button>
+            <button
+              *ngIf="editingTrack() === null"
+              (click)="edit(track)"
+              title="Edit"
+            >
+              [E]
+            </button>
+            <button
+              *ngIf="editingTrack() === track"
+              (click)="save(track)"
+              title="Save"
+            >
+              [S]
+            </button>
+            <button
+              [disabled]="editingTrack() === track"
+              (click)="delete(track)"
+              title="Delete"
+            >
+              [D]
+            </button>
           </td>
         </tr>
       }

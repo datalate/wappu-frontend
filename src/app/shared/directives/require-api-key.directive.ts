@@ -1,4 +1,4 @@
-import { Directive, HostBinding, inject,} from '@angular/core';
+import { Directive, HostBinding, inject } from '@angular/core';
 import { ApiService } from 'src/app/shared/services';
 
 @Directive({
