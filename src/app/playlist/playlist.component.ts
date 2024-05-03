@@ -13,6 +13,7 @@ import { ProgramsService, TracksService } from 'src/app/shared/services';
 import { Program, Radio, Track } from 'src/app/shared/models';
 import { LATEST_RADIO, RADIO_EDITIONS } from 'src/app/shared/constants';
 import { ProgramComponent } from 'src/app/playlist/program/program.component';
+import { RequireApiKeyDirective } from 'src/app/shared/directives';
 
 @Component({
   selector: 'app-playlist',
@@ -20,7 +21,7 @@ import { ProgramComponent } from 'src/app/playlist/program/program.component';
   styleUrls: ['./playlist.component.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush,
   standalone: true,
-  imports: [RouterLink, ProgramComponent],
+  imports: [RouterLink, ProgramComponent, RequireApiKeyDirective],
 })
 export class PlaylistComponent implements OnInit {
   private readonly tracksService = inject(TracksService);
@@ -59,6 +60,24 @@ export class PlaylistComponent implements OnInit {
           track.playedAt >= program.startAt && track.playedAt < program.endAt,
       ) ?? []
     );
+  }
+
+  public editTrack(track: Track): void {
+    this.tracksService.save(track)
+      .subscribe((track) => {
+        this.tracks.set(
+          this.tracks().map((t) => (t.id === track.id ? track : t))
+        );
+      });
+  }
+
+  public deleteTrack(track: Track): void {
+    this.tracksService.delete(track.id)
+      .subscribe(() => {
+        this.tracks.set(
+          this.tracks().filter((t) => t.id !== track.id)
+        );
+      });
   }
 
   private updatePlayed(radio: Radio): void {

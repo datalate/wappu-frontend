@@ -26,15 +26,15 @@ export class TracksService {
     return this.apiService.get<Track>(`${this.resourcePath}/${id}`);
   }
 
-  // public delete(id: number): Observable<{}> {
-  //   return this.apiService.delete(`${ this.routerPath }/${ id }`);
-  // }
-  //
-  // public save(track: Track): Observable<Track> {
-  //   if (track.id) {
-  //     return this.apiService.put<Track>(`${ this.routerPath }/${ track.id }`, track);
-  //   } else {
-  //     return this.apiService.post<Track>(this.routerPath, track);
-  //   }
-  // }
+  public delete(id: number): Observable<{}> {
+    return this.apiService.delete(`${ this.resourcePath }/${ id }`);
+  }
+
+  public save(track: Track): Observable<Track> {
+    if (track.id) {
+      return this.apiService.put<Track>(`${ this.resourcePath }/${ track.id }`, track);
+    } else {
+      return this.apiService.post<Track>(this.resourcePath, track);
+    }
+  }
 }

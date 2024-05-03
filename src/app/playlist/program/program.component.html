@@ -2,7 +2,7 @@
   <div>
     <div
       class="program-info"
-      [class.hidden]="!show()"
+      [class.collapsed]="!show()"
       (click)="toggle()"
       [title]="show() ? 'Piilota' : 'Näytä'"
     >
@@ -17,6 +17,7 @@
         <th class="time">Aika</th>
         <th class="artist">Artisti</th>
         <th class="title">Kappale</th>
+        <th class="actions" requireApiKey></th>
       </tr>
       @for (track of tracks(); track track.id) {
         <tr>
@@ -27,9 +28,30 @@
             class="artist"
             [title]="track.artist ? track.artist : 'Ei artistia'"
           >
-            {{ track.artist ? track.artist : "Ei artistia" }}
+            @if (editingTrack() === track) {
+              <input
+                type="text"
+                [(ngModel)]="editArtist"
+              />
+            } @else {
+              {{ track.artist ? track.artist : "Ei artistia" }}
+            }
           </td>
-          <td class="title" [title]="track.title">{{ track.title }}</td>
+          <td class="title" [title]="track.title">
+            @if (editingTrack() === track) {
+              <input
+                type="text"
+                [(ngModel)]="editTitle"
+              />
+            } @else {
+              {{ track.title }}
+            }
+          </td>
+          <td class="actions" requireApiKey>
+            <button *ngIf="editingTrack() === null" (click)="edit(track)" title="Edit">[E]</button>
+            <button *ngIf="editingTrack() === track" (click)="save(track)" title="Save">[S]</button>
+            <button [disabled]="editingTrack() === track" (click)="delete(track)" title="Delete">[D]</button>
+          </td>
         </tr>
       }
     </table>
