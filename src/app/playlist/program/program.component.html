@@ -18,36 +18,14 @@
           <th class="time">Aika</th>
           <th class="artist">Artisti</th>
           <th class="title">Kappale</th>
-          <th class="actions" requireApiKey>&nbsp;</th>
+          <th class="actions" requireApiKey>
+            <button (click)="add()" type="button" title="Add">[A]</button>
+          </th>
         </tr>
         @for (track of tracks(); track track.id) {
           <tr>
             @if (editingTrack() === track) {
-              <td class="time">
-                <input type="text" formControlName="playedAt" />
-              </td>
-              <td class="artist">
-                <input type="text" formControlName="artist" />
-              </td>
-              <td class="title">
-                <input type="text" formControlName="title" />
-              </td>
-              <td class="actions" requireApiKey>
-                <button
-                  (click)="save(track)"
-                  type="submit"
-                  title="Save"
-                >
-                  [S]
-                </button>
-                <button
-                  (click)="cancelEdit()"
-                  type="button"
-                  title="Cancel"
-                >
-                  [C]
-                </button>
-              </td>
+              <ng-container [ngTemplateOutlet]="formRow"></ng-container>
             } @else {
               <td class="time" [title]="track.playedAt">
                 {{ track.playedAt | date: "HH:mm" }}
@@ -62,25 +40,39 @@
                 {{ track.title }}
               </td>
               <td class="actions" requireApiKey>
-                <button
-                  (click)="edit(track)"
-                  type="button"
-                  title="Edit"
-                >
+                <button (click)="edit(track)" type="button" title="Edit">
                   [E]
                 </button>
-                <button
-                  (click)="delete(track)"
-                  type="button"
-                  title="Delete"
-                >
+                <button (click)="delete(track)" type="button" title="Delete">
                   [D]
                 </button>
               </td>
             }
           </tr>
         }
+        @if (addingTrack()) {
+          <tr>
+            <ng-container [ngTemplateOutlet]="formRow"></ng-container>
+          </tr>
+        }
       </table>
+      <ng-template #formRow>
+        <td class="time">
+          <input type="text" formControlName="playedAt" />
+        </td>
+        <td class="artist">
+          <input type="text" formControlName="artist" />
+        </td>
+        <td class="title">
+          <input type="text" formControlName="title" />
+        </td>
+        <td class="actions" requireApiKey>
+          <button (click)="save()" type="submit" title="Save">[S]</button>
+          <button (click)="cancelEdit()" type="button" title="Cancel">
+            [C]
+          </button>
+        </td>
+      </ng-template>
     </form>
   </div>
 }

@@ -62,16 +62,31 @@ export class PlaylistComponent implements OnInit {
     );
   }
 
+  public addTrack(track: Track): void {
+    this.tracksService.save(track).subscribe((track) => {
+      this.tracks.set(
+        this.tracks()
+          .concat(track)
+          .sort((a, b) => PlaylistComponent.sortByPlayedAt(a, b, false)),
+      );
+    });
+  }
+
   public editTrack(track: Track): void {
     this.tracksService.save(track).subscribe((track) => {
       this.tracks.set(
-        this.tracks().map((t) => (t.id === track.id ? track : t))
-          .sort((a, b) => PlaylistComponent.sortByPlayedAt(a, b, false))
+        this.tracks()
+          .map((t) => (t.id === track.id ? track : t))
+          .sort((a, b) => PlaylistComponent.sortByPlayedAt(a, b, false)),
       );
     });
   }
 
   public deleteTrack(track: Track): void {
+    if (track.id === null) {
+      return;
+    }
+
     this.tracksService.delete(track.id).subscribe(() => {
       this.tracks.set(this.tracks().filter((t) => t.id !== track.id));
     });

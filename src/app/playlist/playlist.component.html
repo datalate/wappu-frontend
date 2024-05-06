@@ -15,6 +15,7 @@
         <app-playlist-program
           [program]="program"
           [tracks]="getTracksForProgram(program)"
+          (onTrackAdded)="addTrack($event)"
           (onTrackEdited)="editTrack($event)"
           (onTrackDeleted)="deleteTrack($event)"
         ></app-playlist-program>
