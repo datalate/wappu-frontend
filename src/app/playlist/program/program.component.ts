@@ -12,18 +12,17 @@ import { FormBuilder, ReactiveFormsModule, Validators } from '@angular/forms';
 import { RequireApiKeyDirective } from 'src/app/shared/directives';
 
 @Component({
-  selector: 'app-playlist-program',
-  templateUrl: './program.component.html',
-  styleUrls: ['./program.component.scss'],
-  changeDetection: ChangeDetectionStrategy.OnPush,
-  standalone: true,
-  imports: [
-    DatePipe,
-    NgIf,
-    ReactiveFormsModule,
-    RequireApiKeyDirective,
-    NgTemplateOutlet,
-  ],
+    selector: 'app-playlist-program',
+    templateUrl: './program.component.html',
+    styleUrls: ['./program.component.scss'],
+    changeDetection: ChangeDetectionStrategy.OnPush,
+    imports: [
+        DatePipe,
+        NgIf,
+        ReactiveFormsModule,
+        RequireApiKeyDirective,
+        NgTemplateOutlet,
+    ]
 })
 export class ProgramComponent {
   private readonly formBuilder = inject(FormBuilder);
