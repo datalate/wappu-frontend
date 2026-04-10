@@ -79,6 +79,10 @@ export class ProgramComponent {
   public save(): void {
     this.trackForm.markAllAsTouched();
     if (!this.trackForm.valid) {
+      globalThis.alert(
+        'Unable to save track. Check required fields and time format (HH:mm).',
+      );
+
       return;
     }
 

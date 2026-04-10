@@ -61,22 +61,32 @@ export class PlaylistComponent implements OnInit {
   }
 
   public addTrack(track: Track): void {
-    this.tracksService.save(track).subscribe((track) => {
-      this.tracks.set(
-        this.tracks()
-          .concat(track)
-          .sort((a, b) => PlaylistComponent.sortByPlayedAt(a, b, false)),
-      );
+    this.tracksService.save(track).subscribe({
+      next: (track) => {
+        this.tracks.set(
+          this.tracks()
+            .concat(track)
+            .sort((a, b) => PlaylistComponent.sortByPlayedAt(a, b, false)),
+        );
+      },
+      error: () => {
+        globalThis.alert('Failed to create track: API request failed');
+      },
     });
   }
 
   public editTrack(track: Track): void {
-    this.tracksService.save(track).subscribe((track) => {
-      this.tracks.set(
-        this.tracks()
-          .map((t) => (t.id === track.id ? track : t))
-          .sort((a, b) => PlaylistComponent.sortByPlayedAt(a, b, false)),
-      );
+    this.tracksService.save(track).subscribe({
+      next: (track) => {
+        this.tracks.set(
+          this.tracks()
+            .map((t) => (t.id === track.id ? track : t))
+            .sort((a, b) => PlaylistComponent.sortByPlayedAt(a, b, false)),
+        );
+      },
+      error: () => {
+        globalThis.alert('Failed to update track: API request failed');
+      },
     });
   }
 
@@ -85,8 +95,21 @@ export class PlaylistComponent implements OnInit {
       return;
     }
 
-    this.tracksService.delete(track.id).subscribe(() => {
-      this.tracks.set(this.tracks().filter((t) => t.id !== track.id));
+    const confirmed = globalThis.confirm(
+      `Delete track "${track.title}"?`,
+    );
+
+    if (!confirmed) {
+      return;
+    }
+
+    this.tracksService.delete(track.id).subscribe({
+      next: () => {
+        this.tracks.set(this.tracks().filter((t) => t.id !== track.id));
+      },
+      error: () => {
+        globalThis.alert('Failed to delete track: API request failed');
+      },
     });
   }
 
