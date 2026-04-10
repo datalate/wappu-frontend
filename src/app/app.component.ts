@@ -9,7 +9,7 @@ import { ActivatedRoute, RouterOutlet } from '@angular/router';
 import { TranslocoService } from '@jsverse/transloco';
 import { map, distinctUntilChanged, filter } from 'rxjs';
 import {
-  normalizeLanguage,
+  AVAILABLE_LANGUAGES,
   type SupportedLanguage,
 } from 'src/app/i18n/language.util';
 
@@ -24,13 +24,15 @@ export class AppComponent implements OnInit {
   private readonly route = inject(ActivatedRoute);
   private readonly translocoService = inject(TranslocoService);
 
-  private routeParams$ = this.route.params.pipe(takeUntilDestroyed());
+  private queryParams$ = this.route.queryParams.pipe(takeUntilDestroyed());
 
   public ngOnInit(): void {
-    this.routeParams$
+    this.queryParams$
       .pipe(
-        map((params) => normalizeLanguage(params['lang'])),
-        filter((lang): lang is SupportedLanguage => lang !== null),
+        map((params) => params['lang'] as string | undefined),
+        filter((lang): lang is SupportedLanguage =>
+          AVAILABLE_LANGUAGES.includes(lang as SupportedLanguage),
+        ),
         distinctUntilChanged(),
       )
       .subscribe((language) => {
