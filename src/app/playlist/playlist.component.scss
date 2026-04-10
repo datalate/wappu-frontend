@@ -9,16 +9,22 @@
   padding: 0 10px;
 }
 
-.playlist-nav {
+.toolbar {
   float: right;
+  display: flex;
+  gap: 6px;
+}
 
-  a {
-    font-family: "Lucida Console", Monaco, monospace;
-    text-transform: uppercase;
-    margin: 0 1px;
-  }
+.toolbar-select {
+  font-family: "Lucida Console", Monaco, monospace;
+  text-transform: uppercase;
+  background-color: #1a0005;
+  color: white;
+  border: 1px solid #555;
+  padding: 4px 8px;
+  cursor: pointer;
 
-  a:hover {
-    color: lightgray;
+  &:hover {
+    border-color: lightgray;
   }
 }

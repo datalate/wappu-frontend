@@ -1,0 +1,24 @@
+{
+  "playlist": {
+    "title": "Wappuradion soitetut",
+    "loading": "Ladataan...",
+    "empty": "Ei näytettäviä kappaleita"
+  },
+  "program": {
+    "table": {
+      "empty-artist": "Ei artistia",
+      "time": "Aika",
+      "artist": "Artisti",
+      "track": "Kappale"
+    },
+    "actions": {
+      "show": "Näytä",
+      "hide": "Piilota",
+      "add": "Lisää",
+      "edit": "Muokkaa",
+      "delete": "Poista",
+      "save": "Tallenna",
+      "cancel": "Peruuta"
+    }
+  }
+}

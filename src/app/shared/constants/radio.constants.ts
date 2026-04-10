@@ -61,6 +61,11 @@ export const RADIO_EDITIONS: Radio[] = [
     startAt: new Date('2025-04-14T00:00:00+03:00'),
     endAt: new Date('2025-04-30T23:59:59+03:00'),
   },
+  {
+    id: '2026',
+    startAt: new Date('2026-04-14T00:00:00+03:00'),
+    endAt: new Date('2026-04-30T23:59:59+03:00'),
+  },
 ];
 
-export const LATEST_RADIO = '2025';
+export const LATEST_RADIO = '2026';

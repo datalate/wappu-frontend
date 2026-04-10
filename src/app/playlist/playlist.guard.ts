@@ -14,5 +14,5 @@ export const playlistGuard =
 
     return RADIO_EDITIONS.some((radio) => radio.id === route.params['radio'])
       ? true
-      : router.navigate([LATEST_RADIO]);
+      : router.createUrlTree([LATEST_RADIO]);
   };

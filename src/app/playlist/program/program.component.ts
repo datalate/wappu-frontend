@@ -7,8 +7,9 @@ import {
   signal,
 } from '@angular/core';
 import { Program, Track } from 'src/app/shared/models';
-import { DatePipe, NgIf, NgTemplateOutlet } from '@angular/common';
+import { DatePipe, NgTemplateOutlet } from '@angular/common';
 import { FormBuilder, ReactiveFormsModule, Validators } from '@angular/forms';
+import { TranslocoPipe, TranslocoService } from '@jsverse/transloco';
 import { RequireApiKeyDirective } from 'src/app/shared/directives';
 
 @Component({
@@ -16,17 +17,17 @@ import { RequireApiKeyDirective } from 'src/app/shared/directives';
   templateUrl: './program.component.html',
   styleUrls: ['./program.component.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush,
-  standalone: true,
   imports: [
     DatePipe,
-    NgIf,
     ReactiveFormsModule,
     RequireApiKeyDirective,
     NgTemplateOutlet,
+    TranslocoPipe,
   ],
 })
 export class ProgramComponent {
   private readonly formBuilder = inject(FormBuilder);
+  private readonly translocoService = inject(TranslocoService);
 
   public readonly program = input.required<Program>();
   public readonly tracks = input.required<Track[]>();
@@ -50,6 +51,10 @@ export class ProgramComponent {
       ],
     ],
   });
+
+  get dateLocale(): string {
+    return this.translocoService.getActiveLang() === 'fi' ? 'fi-FI' : 'en-US';
+  }
 
   public toggle(): void {
     this.show.set(!this.show());
@@ -81,6 +86,10 @@ export class ProgramComponent {
   public save(): void {
     this.trackForm.markAllAsTouched();
     if (!this.trackForm.valid) {
+      globalThis.alert(
+        'Unable to save track. Check required fields and time format (HH:mm).',
+      );
+
       return;
     }
 
