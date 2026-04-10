@@ -7,6 +7,7 @@ import {
 } from '@angular/core';
 import { ActivatedRoute, RouterLink } from '@angular/router';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
+import { TranslocoPipe } from '@jsverse/transloco';
 import { catchError, distinctUntilChanged, of, zip } from 'rxjs';
 import { map } from 'rxjs/operators';
 import { ProgramsService, TracksService } from 'src/app/shared/services';
@@ -19,7 +20,7 @@ import { ProgramComponent } from 'src/app/playlist/program/program.component';
   templateUrl: './playlist.component.html',
   styleUrls: ['./playlist.component.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush,
-  imports: [RouterLink, ProgramComponent],
+  imports: [RouterLink, ProgramComponent, TranslocoPipe],
 })
 export class PlaylistComponent implements OnInit {
   private readonly tracksService = inject(TracksService);
@@ -95,9 +96,7 @@ export class PlaylistComponent implements OnInit {
       return;
     }
 
-    const confirmed = globalThis.confirm(
-      `Delete track "${track.title}"?`,
-    );
+    const confirmed = globalThis.confirm(`Delete track "${track.title}"?`);
 
     if (!confirmed) {
       return;

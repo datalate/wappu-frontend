@@ -4,22 +4,37 @@
       class="program-info"
       [class.collapsed]="!show()"
       (click)="toggle()"
-      [title]="show() ? 'Piilota' : 'Näytä'"
+      [title]="
+        show()
+          ? ('program.actions.hide' | transloco)
+          : ('program.actions.show' | transloco)
+      "
     >
       <h3>{{ program().title }}</h3>
       <h5>
-        {{ program().startAt | date: "EEE, MMM d, HH:mm" }} -
-        {{ program().endAt | date: "EEE, MMM d, HH:mm" }}
+        {{
+          program().startAt | date: 'EEE, MMM d, HH:mm' : undefined : dateLocale
+        }}
+        -
+        {{
+          program().endAt | date: 'EEE, MMM d, HH:mm' : undefined : dateLocale
+        }}
       </h5>
     </div>
     <form [formGroup]="trackForm" (ngSubmit)="save()">
       <table class="program-tracks" [class.hidden]="!show()">
         <tr>
-          <th class="time">Aika</th>
-          <th class="artist">Artisti</th>
-          <th class="title">Kappale</th>
+          <th class="time">{{ 'program.table.time' | transloco }}</th>
+          <th class="artist">{{ 'program.table.artist' | transloco }}</th>
+          <th class="title">{{ 'program.table.track' | transloco }}</th>
           <th class="actions" requireApiKey>
-            <button (click)="add()" type="button" title="Add">[A]</button>
+            <button
+              (click)="add()"
+              type="button"
+              [title]="'program.actions.add' | transloco"
+            >
+              [A]
+            </button>
           </th>
         </tr>
         @for (track of tracks(); track track.id) {
@@ -28,22 +43,38 @@
               <ng-container [ngTemplateOutlet]="formRow"></ng-container>
             } @else {
               <td class="time" [title]="track.playedAt">
-                {{ track.playedAt | date: "HH:mm" }}
+                {{ track.playedAt | date: 'HH:mm' : undefined : dateLocale }}
               </td>
               <td
                 class="artist"
-                [title]="track.artist ? track.artist : 'Ei artistia'"
+                [title]="
+                  track.artist
+                    ? track.artist
+                    : ('program.table.empty-artist' | transloco)
+                "
               >
-                {{ track.artist ? track.artist : "Ei artistia" }}
+                {{
+                  track.artist
+                    ? track.artist
+                    : ('program.table.empty-artist' | transloco)
+                }}
               </td>
               <td class="title" [title]="track.title">
                 {{ track.title }}
               </td>
               <td class="actions" requireApiKey>
-                <button (click)="edit(track)" type="button" title="Edit">
+                <button
+                  (click)="edit(track)"
+                  type="button"
+                  [title]="'program.actions.edit' | transloco"
+                >
                   [E]
                 </button>
-                <button (click)="delete(track)" type="button" title="Delete">
+                <button
+                  (click)="delete(track)"
+                  type="button"
+                  [title]="'program.actions.delete' | transloco"
+                >
                   [D]
                 </button>
               </td>
@@ -67,8 +98,14 @@
           <input type="text" formControlName="title" />
         </td>
         <td class="actions" requireApiKey>
-          <button type="submit" title="Save">[S]</button>
-          <button (click)="cancelEdit()" type="button" title="Cancel">
+          <button type="submit" [title]="'program.actions.save' | transloco">
+            [S]
+          </button>
+          <button
+            (click)="cancelEdit()"
+            type="button"
+            [title]="'program.actions.cancel' | transloco"
+          >
             [C]
           </button>
         </td>
