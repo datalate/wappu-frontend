@@ -1,9 +1,26 @@
 <div class="playlist">
-  <nav class="playlist-nav">
-    @for (edition of radioEditions; track edition) {
-      <a [routerLink]="'/' + edition">[{{ edition }}]</a>
-    }
-  </nav>
+  <div class="toolbar">
+    <select
+      class="toolbar-select"
+      (change)="onLanguageChange($any($event.target).value)"
+    >
+      @for (lang of languages; track lang) {
+        <option [value]="lang" [selected]="lang === activeLanguage">
+          {{ lang }}
+        </option>
+      }
+    </select>
+    <select
+      class="toolbar-select"
+      (change)="onEditionChange($any($event.target).value)"
+    >
+      @for (edition of radioEditions; track edition) {
+        <option [value]="edition" [selected]="edition === selectedEdition()">
+          {{ edition }}
+        </option>
+      }
+    </select>
+  </div>
   <h1 class="title">{{ 'playlist.title' | transloco }}</h1>
   @if (loading()) {
     <p>{{ 'playlist.loading' | transloco }}</p>

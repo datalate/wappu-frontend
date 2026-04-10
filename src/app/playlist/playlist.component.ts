@@ -5,14 +5,15 @@ import {
   OnInit,
   signal,
 } from '@angular/core';
-import { ActivatedRoute, RouterLink } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
-import { TranslocoPipe } from '@jsverse/transloco';
+import { TranslocoPipe, TranslocoService } from '@jsverse/transloco';
 import { catchError, distinctUntilChanged, of, zip } from 'rxjs';
 import { map } from 'rxjs/operators';
 import { ProgramsService, TracksService } from 'src/app/shared/services';
 import { Program, Radio, Track } from 'src/app/shared/models';
 import { LATEST_RADIO, RADIO_EDITIONS } from 'src/app/shared/constants';
+import { AVAILABLE_LANGUAGES } from 'src/app/i18n/language.util';
 import { ProgramComponent } from 'src/app/playlist/program/program.component';
 
 @Component({
@@ -20,18 +21,21 @@ import { ProgramComponent } from 'src/app/playlist/program/program.component';
   templateUrl: './playlist.component.html',
   styleUrls: ['./playlist.component.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush,
-  imports: [RouterLink, ProgramComponent, TranslocoPipe],
+  imports: [ProgramComponent, TranslocoPipe],
 })
 export class PlaylistComponent implements OnInit {
   private readonly tracksService = inject(TracksService);
   private readonly programsService = inject(ProgramsService);
   private readonly route = inject(ActivatedRoute);
+  private readonly router = inject(Router);
+  private readonly translocoService = inject(TranslocoService);
 
   private routeParams$ = this.route.params.pipe(takeUntilDestroyed());
 
   public tracks = signal<Track[]>([]);
   public programs = signal<Program[]>([]);
   public loading = signal(false);
+  public selectedEdition = signal<string | null>(null);
 
   public ngOnInit(): void {
     this.routeParams$
@@ -44,12 +48,31 @@ export class PlaylistComponent implements OnInit {
         ),
       )
       .subscribe((radio) => {
-        this.updatePlayed(radio);
+        this.selectRadio(radio);
       });
   }
 
-  get radioEditions(): string[] {
-    return RADIO_EDITIONS.map((radio) => radio.id);
+  get radioEditions(): readonly string[] {
+    return RADIO_EDITIONS.map((radio) => radio.id).reverse();
+  }
+
+  get languages(): readonly string[] {
+    return AVAILABLE_LANGUAGES;
+  }
+
+  get activeLanguage(): string {
+    return this.translocoService.getActiveLang();
+  }
+
+  public onEditionChange(edition: string): void {
+    this.router.navigate(['/', edition], { queryParamsHandling: 'preserve' }).then();
+  }
+
+  public onLanguageChange(language: string): void {
+    this.router.navigate([], {
+      queryParams: { lang: language },
+      queryParamsHandling: 'merge',
+    }).then();
   }
 
   public getTracksForProgram(program: Program): Track[] {
@@ -112,7 +135,7 @@ export class PlaylistComponent implements OnInit {
     });
   }
 
-  private updatePlayed(radio: Radio): void {
+  private selectRadio(radio: Radio): void {
     const queryParams = {
       startDate: radio.startAt,
       endDate: radio.endAt,
@@ -121,6 +144,7 @@ export class PlaylistComponent implements OnInit {
     this.programs.set([]);
     this.tracks.set([]);
     this.loading.set(true);
+    this.selectedEdition.set(radio.id);
 
     zip([
       this.programsService.query(queryParams),
