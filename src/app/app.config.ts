@@ -1,8 +1,4 @@
-import {
-  HTTP_INTERCEPTORS,
-  provideHttpClient,
-  withInterceptorsFromDi,
-} from '@angular/common/http';
+import { HTTP_INTERCEPTORS, provideHttpClient, withInterceptorsFromDi } from '@angular/common/http';
 import { ApplicationConfig, importProvidersFrom } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 import { provideAnimations } from '@angular/platform-browser/animations';
