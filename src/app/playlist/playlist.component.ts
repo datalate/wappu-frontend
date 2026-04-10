@@ -65,14 +65,18 @@ export class PlaylistComponent implements OnInit {
   }
 
   public onEditionChange(edition: string): void {
-    this.router.navigate(['/', edition], { queryParamsHandling: 'preserve' }).then();
+    this.router
+      .navigate(['/', edition], { queryParamsHandling: 'preserve' })
+      .then();
   }
 
   public onLanguageChange(language: string): void {
-    this.router.navigate([], {
-      queryParams: { lang: language },
-      queryParamsHandling: 'merge',
-    }).then();
+    this.router
+      .navigate([], {
+        queryParams: { lang: language },
+        queryParamsHandling: 'merge',
+      })
+      .then();
   }
 
   public getTracksForProgram(program: Program): Track[] {
