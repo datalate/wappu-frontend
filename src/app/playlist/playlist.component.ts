@@ -13,14 +13,13 @@ import { ProgramsService, TracksService } from 'src/app/shared/services';
 import { Program, Radio, Track } from 'src/app/shared/models';
 import { LATEST_RADIO, RADIO_EDITIONS } from 'src/app/shared/constants';
 import { ProgramComponent } from 'src/app/playlist/program/program.component';
-import { RequireApiKeyDirective } from 'src/app/shared/directives';
 
 @Component({
     selector: 'app-playlist',
     templateUrl: './playlist.component.html',
     styleUrls: ['./playlist.component.scss'],
     changeDetection: ChangeDetectionStrategy.OnPush,
-    imports: [RouterLink, ProgramComponent, RequireApiKeyDirective]
+    imports: [RouterLink, ProgramComponent]
 })
 export class PlaylistComponent implements OnInit {
   private readonly tracksService = inject(TracksService);

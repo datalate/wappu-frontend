@@ -7,7 +7,7 @@ import {
   signal,
 } from '@angular/core';
 import { Program, Track } from 'src/app/shared/models';
-import { DatePipe, NgIf, NgTemplateOutlet } from '@angular/common';
+import { DatePipe, NgTemplateOutlet } from '@angular/common';
 import { FormBuilder, ReactiveFormsModule, Validators } from '@angular/forms';
 import { RequireApiKeyDirective } from 'src/app/shared/directives';
 
@@ -17,12 +17,11 @@ import { RequireApiKeyDirective } from 'src/app/shared/directives';
     styleUrls: ['./program.component.scss'],
     changeDetection: ChangeDetectionStrategy.OnPush,
     imports: [
-        DatePipe,
-        NgIf,
-        ReactiveFormsModule,
-        RequireApiKeyDirective,
-        NgTemplateOutlet,
-    ]
+    DatePipe,
+    ReactiveFormsModule,
+    RequireApiKeyDirective,
+    NgTemplateOutlet
+]
 })
 export class ProgramComponent {
   private readonly formBuilder = inject(FormBuilder);
