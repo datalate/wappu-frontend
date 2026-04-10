@@ -15,11 +15,11 @@ import { LATEST_RADIO, RADIO_EDITIONS } from 'src/app/shared/constants';
 import { ProgramComponent } from 'src/app/playlist/program/program.component';
 
 @Component({
-    selector: 'app-playlist',
-    templateUrl: './playlist.component.html',
-    styleUrls: ['./playlist.component.scss'],
-    changeDetection: ChangeDetectionStrategy.OnPush,
-    imports: [RouterLink, ProgramComponent]
+  selector: 'app-playlist',
+  templateUrl: './playlist.component.html',
+  styleUrls: ['./playlist.component.scss'],
+  changeDetection: ChangeDetectionStrategy.OnPush,
+  imports: [RouterLink, ProgramComponent],
 })
 export class PlaylistComponent implements OnInit {
   private readonly tracksService = inject(TracksService);

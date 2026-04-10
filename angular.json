@@ -41,7 +41,7 @@
           "options": {
             "outputPath": {
               "base": "dist/wappu-frontend",
-              "browser":  ""
+              "browser": ""
             },
             "index": "src/index.html",
             "polyfills": [],
