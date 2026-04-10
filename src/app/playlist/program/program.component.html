@@ -12,7 +12,7 @@
         {{ program().endAt | date: "EEE, MMM d, HH:mm" }}
       </h5>
     </div>
-    <form [formGroup]="trackForm">
+    <form [formGroup]="trackForm" (ngSubmit)="save()">
       <table class="program-tracks" [class.hidden]="!show()">
         <tr>
           <th class="time">Aika</th>
@@ -67,7 +67,7 @@
           <input type="text" formControlName="title" />
         </td>
         <td class="actions" requireApiKey>
-          <button (click)="save()" type="submit" title="Save">[S]</button>
+          <button type="submit" title="Save">[S]</button>
           <button (click)="cancelEdit()" type="button" title="Cancel">
             [C]
           </button>
