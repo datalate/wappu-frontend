@@ -37,6 +37,13 @@ export class PlaylistComponent implements OnInit {
   public loading = signal(false);
   public selectedEdition = signal<string | null>(null);
 
+  public scrollToBottom(): void {
+    window.scrollTo({
+      top: document.documentElement.scrollHeight,
+      behavior: 'smooth',
+    });
+  }
+
   public ngOnInit(): void {
     this.routeParams$
       .pipe(

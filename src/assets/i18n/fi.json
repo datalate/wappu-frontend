@@ -2,7 +2,8 @@
   "playlist": {
     "title": "Wappuradion soitetut",
     "loading": "Ladataan...",
-    "empty": "Ei näytettäviä kappaleita"
+    "empty": "Ei näytettäviä kappaleita",
+    "scroll-to-bottom": "Alas"
   },
   "program": {
     "table": {

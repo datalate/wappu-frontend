@@ -1,7 +1,7 @@
 <div class="playlist">
   <div class="toolbar">
     <select
-      class="toolbar-select"
+      class="toolbar-item"
       (change)="onLanguageChange($any($event.target).value)"
     >
       @for (lang of languages; track lang) {
@@ -11,7 +11,7 @@
       }
     </select>
     <select
-      class="toolbar-select"
+      class="toolbar-item"
       (change)="onEditionChange($any($event.target).value)"
     >
       @for (edition of radioEditions; track edition) {
@@ -20,6 +20,13 @@
         </option>
       }
     </select>
+    <button
+      class="toolbar-item"
+      (click)="scrollToBottom()"
+      title="{{ 'playlist.scroll-to-bottom' | transloco }}"
+    >
+      ↓
+    </button>
   </div>
   <h1 class="title">{{ 'playlist.title' | transloco }}</h1>
   @if (loading()) {

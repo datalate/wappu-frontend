@@ -2,7 +2,8 @@
   "playlist": {
     "title": "Wappuradio playlist",
     "loading": "Loading...",
-    "empty": "No tracks to display"
+    "empty": "No tracks to display",
+    "scroll-to-bottom": "To bottom"
   },
   "program": {
     "table": {
