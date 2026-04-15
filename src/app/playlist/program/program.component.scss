@@ -29,7 +29,8 @@
   width: 100%;
   border-spacing: 0;
   table-layout: fixed;
-  white-space: nowrap;
+  word-break: break-word;
+  font-size: 0.9em;
 
   tr,
   th {
@@ -46,11 +47,7 @@
 
   td {
     font-family: "Lucida Console", Monaco, monospace;
-    font-size: 1em;
     padding: 3px 6px;
-    white-space: nowrap;
-    overflow: hidden;
-    text-overflow: ellipsis;
   }
 
   .time {
