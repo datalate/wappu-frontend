@@ -1,5 +1,5 @@
 .program-info {
-  margin: 5px 0;
+  margin: 0.3rem 0;
   padding: 1px 0;
 
   &:hover {
@@ -14,13 +14,13 @@
   }
 
   h3 {
-    margin: 10px 0 5px;
+    margin: 0.625rem 0 0.3rem;
   }
 
   h5 {
     font-family: "Lucida Console", Monaco, monospace;
     color: #ddd;
-    margin: 5px 0;
+    margin: 0.3rem 0;
     font-weight: normal;
   }
 }
@@ -34,7 +34,7 @@
 
   tr,
   th {
-    padding: 8px;
+    padding: 0.5rem;
   }
 
   tr:nth-child(even) {
@@ -47,11 +47,11 @@
 
   td {
     font-family: "Lucida Console", Monaco, monospace;
-    padding: 3px 6px;
+    padding: 0.2rem 0.375rem;
   }
 
   .time {
-    width: 50px;
+    width: 3rem;
     text-align: center;
   }
 
@@ -61,7 +61,7 @@
   }
 
   .actions {
-    width: 50px;
+    width: 3.5rem;
     text-align: right;
 
     button {

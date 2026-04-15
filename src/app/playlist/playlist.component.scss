@@ -4,15 +4,15 @@
 }
 
 .playlist {
-  max-width: 1600px;
-  margin: 0 auto 25px;
-  padding: 0 10px;
+  max-width: 100rem;
+  margin: 0 auto 1.5rem;
+  padding: 0 0.625rem;
 }
 
 .toolbar {
   float: right;
   display: flex;
-  gap: 6px;
+  gap: 0.375rem;
 }
 
 .toolbar-select {
@@ -21,7 +21,7 @@
   background-color: #1a0005;
   color: white;
   border: 1px solid #555;
-  padding: 4px 8px;
+  padding: 0.25rem 0.5rem;
   cursor: pointer;
 
   &:hover {
