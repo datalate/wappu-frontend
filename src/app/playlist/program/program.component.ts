@@ -35,10 +35,16 @@ export class ProgramComponent {
   public readonly show = signal(true);
   public readonly editingTrack = signal<Track | null>(null);
   public readonly addingTrack = signal(false);
+  public readonly editingProgram = signal(false);
 
   public readonly onTrackAdded = output<Track>();
   public readonly onTrackEdited = output<Track>();
   public readonly onTrackDeleted = output<Track>();
+  public readonly onProgramEdited = output<Program>();
+
+  public readonly programForm = this.formBuilder.group({
+    title: ['', Validators.required],
+  });
 
   public readonly trackForm = this.formBuilder.group({
     artist: '',
@@ -60,14 +66,14 @@ export class ProgramComponent {
     this.show.set(!this.show());
   }
 
-  public add(): void {
+  public addTrack(): void {
     this.trackForm.reset({});
 
     this.addingTrack.set(true);
     this.editingTrack.set(null);
   }
 
-  public edit(track: Track): void {
+  public editTrack(track: Track): void {
     this.trackForm.patchValue({
       artist: track.artist,
       title: track.title,
@@ -78,12 +84,12 @@ export class ProgramComponent {
     this.editingTrack.set(track);
   }
 
-  public cancelEdit(): void {
+  public cancelEditTrack(): void {
     this.addingTrack.set(false);
     this.editingTrack.set(null);
   }
 
-  public save(): void {
+  public saveTrack(): void {
     this.trackForm.markAllAsTouched();
     if (!this.trackForm.valid) {
       globalThis.alert(
@@ -125,7 +131,33 @@ export class ProgramComponent {
     this.editingTrack.set(null);
   }
 
-  public delete(track: Track): void {
+  public deleteTrack(track: Track): void {
     this.onTrackDeleted.emit(track);
+  }
+
+  public editProgram(): void {
+    this.programForm.patchValue({ title: this.program().title });
+    this.editingProgram.set(true);
+  }
+
+  public cancelEditProgram(): void {
+    this.editingProgram.set(false);
+  }
+
+  public saveProgram(): void {
+    this.programForm.markAllAsTouched();
+
+    if (!this.programForm.valid) {
+      globalThis.alert('Unable to save program. Title is required.');
+      return;
+    }
+
+    const { title } = this.programForm.getRawValue();
+    this.onProgramEdited.emit({
+      ...this.program(),
+      title: title!,
+    });
+
+    this.editingProgram.set(false);
   }
 }

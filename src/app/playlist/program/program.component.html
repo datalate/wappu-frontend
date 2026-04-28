@@ -3,15 +3,47 @@
     <div
       class="program-info"
       [class.collapsed]="!show()"
-      (click)="toggle()"
-      [title]="
-        show()
-          ? ('program.actions.hide' | transloco)
-          : ('program.actions.show' | transloco)
-      "
     >
-      <h3>{{ program().title }}</h3>
-      <h5>
+      @if (editingProgram()) {
+        <div [formGroup]="programForm">
+          <input type="text" formControlName="title" />
+          <button
+            (click)="saveProgram()"
+            type="button"
+            [title]="'program.actions.save' | transloco"
+          >
+            [S]
+          </button>
+          <button
+            (click)="cancelEditProgram()"
+            type="button"
+            [title]="'program.actions.cancel' | transloco"
+          >
+            [C]
+          </button>
+        </div>
+      } @else {
+        <div (click)="toggle()"
+          [title]="
+            show()
+              ? ('program.actions.hide' | transloco)
+              : ('program.actions.show' | transloco)
+          "
+        >
+          <h3>
+            {{ program().title }}
+            <button
+              requireApiKey
+              (click)="editProgram(); $event.stopPropagation()"
+              type="button"
+              [title]="'program.actions.edit' | transloco"
+            >
+              [E]
+            </button>
+          </h3>
+        </div>
+      }
+      <h5 (click)="toggle()">
         {{
           program().startAt | date: 'EEE, MMM d, HH:mm' : undefined : dateLocale
         }}
@@ -21,7 +53,7 @@
         }}
       </h5>
     </div>
-    <form [formGroup]="trackForm" (ngSubmit)="save()">
+    <form [formGroup]="trackForm" (ngSubmit)="saveTrack()">
       <table class="program-tracks" [class.hidden]="!show()">
         <tr>
           <th class="time">{{ 'program.table.time' | transloco }}</th>
@@ -29,7 +61,7 @@
           <th class="title">{{ 'program.table.track' | transloco }}</th>
           <th class="actions" requireApiKey>
             <button
-              (click)="add()"
+              (click)="addTrack()"
               type="button"
               [title]="'program.actions.add' | transloco"
             >
@@ -64,14 +96,14 @@
               </td>
               <td class="actions" requireApiKey>
                 <button
-                  (click)="edit(track)"
+                  (click)="editTrack(track)"
                   type="button"
                   [title]="'program.actions.edit' | transloco"
                 >
                   [E]
                 </button>
                 <button
-                  (click)="delete(track)"
+                  (click)="deleteTrack(track)"
                   type="button"
                   [title]="'program.actions.delete' | transloco"
                 >
@@ -102,7 +134,7 @@
             [S]
           </button>
           <button
-            (click)="cancelEdit()"
+            (click)="cancelEditTrack()"
             type="button"
             [title]="'program.actions.cancel' | transloco"
           >

@@ -27,14 +27,14 @@ export class ProgramsService {
   }
 
   // public delete(id: number): Observable<{}> {
-  //   return this.apiService.delete(`${ this.routerPath }/${ id }`);
+  //   return this.apiService.delete(`${this.resourcePath}/${id}`);
   // }
-  //
-  // public save(program: Program): Observable<Program> {
-  //   if (program.id) {
-  //     return this.apiService.put<Program>(`${ this.routerPath }/${ program.id }`, program);
-  //   } else {
-  //     return this.apiService.post<Program>(this.routerPath, program);
-  //   }
-  // }
+
+  public save(program: Program): Observable<Program> {
+    if (program.id) {
+      return this.apiService.put<Program>(`${this.resourcePath}/${program.id}`, program);
+    } else {
+      return this.apiService.post<Program>(this.resourcePath, program);
+    }
+  }
 }

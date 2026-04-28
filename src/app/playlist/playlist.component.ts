@@ -146,6 +146,21 @@ export class PlaylistComponent implements OnInit {
     });
   }
 
+  public editProgram(program: Program): void {
+    this.programsService.save(program).subscribe({
+      next: (updated) => {
+        this.programs.set(
+          this.programs()
+            .map((p) => (p.id === updated.id ? updated : p))
+            .sort((a, b) => PlaylistComponent.sortByStartAt(a, b, false)),
+        );
+      },
+      error: () => {
+        globalThis.alert('Failed to update program: API request failed');
+      },
+    });
+  }
+
   private selectRadio(radio: Radio): void {
     const queryParams = {
       startDate: radio.startAt,
