@@ -3,9 +3,19 @@
     <div
       class="program-info"
       [class.collapsed]="!show()"
+      (click)="toggle()"
+      [title]="
+        show()
+          ? ('program.actions.hide' | transloco)
+          : ('program.actions.show' | transloco)
+      "
     >
       @if (editingProgram()) {
-        <div [formGroup]="programForm">
+        <div
+          class="program-title-edit"
+          [formGroup]="programForm"
+          (click)="$event.stopPropagation()"
+        >
           <input type="text" formControlName="title" />
           <button
             (click)="saveProgram()"
@@ -23,27 +33,19 @@
           </button>
         </div>
       } @else {
-        <div (click)="toggle()"
-          [title]="
-            show()
-              ? ('program.actions.hide' | transloco)
-              : ('program.actions.show' | transloco)
-          "
-        >
-          <h3>
-            {{ program().title }}
-            <button
-              requireApiKey
-              (click)="editProgram(); $event.stopPropagation()"
-              type="button"
-              [title]="'program.actions.edit' | transloco"
-            >
-              [E]
-            </button>
-          </h3>
-        </div>
+        <h3>
+          {{ program().title }}
+          <button
+            requireApiKey
+            (click)="editProgram(); $event.stopPropagation()"
+            type="button"
+            [title]="'program.actions.edit' | transloco"
+          >
+            [E]
+          </button>
+        </h3>
       }
-      <h5 (click)="toggle()">
+      <h5>
         {{
           program().startAt | date: 'EEE, MMM d, HH:mm' : undefined : dateLocale
         }}

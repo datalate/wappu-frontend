@@ -32,7 +32,10 @@ export class ProgramsService {
 
   public save(program: Program): Observable<Program> {
     if (program.id) {
-      return this.apiService.put<Program>(`${this.resourcePath}/${program.id}`, program);
+      return this.apiService.put<Program>(
+        `${this.resourcePath}/${program.id}`,
+        program,
+      );
     } else {
       return this.apiService.post<Program>(this.resourcePath, program);
     }
